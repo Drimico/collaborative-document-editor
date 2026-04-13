@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import { useYjs } from "../yjs/Provider";
 import { Quill } from "react-quill-new";
 import { QuillBinding } from "y-quill";
 import QuillCursors from "quill-cursors";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
+import { useYjs } from "../../../app/providers/YjsProvider";
 
 Quill.register("modules/cursors", QuillCursors);
 

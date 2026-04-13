@@ -1,5 +1,5 @@
-import { YjsProvider } from "../../shared/lib/yjs/Provider";
 import RoutesProvider from "../router";
+import { YjsProvider } from "./YjsProvider";
 
 const AppProviders = () => {
   return (
