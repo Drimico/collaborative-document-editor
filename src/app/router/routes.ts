@@ -1,6 +1,6 @@
 import { lazy } from "react";
-import { BlankLayout } from "../layouts/BlankLayout.tsx";
-import { RootLayout } from "../layouts/RootLayout.tsx";
+import { BlankLayout } from "../layouts/BlankLayout/BlankLayout.tsx";
+import { RootLayout } from "../layouts/RootLayout/RootLayout.tsx";
 
 const Dashboard = lazy(() => import("../../pages/Dashboard"));
 const Editor = lazy(() => import("../../pages/Editor"));

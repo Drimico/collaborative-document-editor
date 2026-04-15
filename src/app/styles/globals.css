@@ -1,1 +1,12 @@
 @import "tailwindcss";
+@font-face {
+  font-family: SN;
+  src: url("/fonts/SNPro-Regular.ttf") format("truetype");
+}
+body {
+  box-sizing: border-box;
+  background-color: #fef9c2;
+  font-family: SN;
+  scrollbar-gutter: stable;
+  margin: 0
+}
