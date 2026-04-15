@@ -5,12 +5,14 @@ interface ButtonProps {
   shadow: string;
   color: string;
   shadowSize: string;
-  onClick: () => void;
+  onClick: (e:React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
 }
-export const Button = ({ text, size, shadow, color, shadowSize, onClick }: ButtonProps) => {
+export const Button = ({ text, size, shadow, color, shadowSize, onClick, disabled }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={twMerge("text-2xl cursor-pointer relative", size)}
     >
       <div

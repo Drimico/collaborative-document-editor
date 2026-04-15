@@ -1,3 +1,5 @@
+import RegisterForm from "../../features/auth/ui/RegisterForm";
+
 export const Register = () => {
-  return <div></div>;
+  return <RegisterForm />;
 };

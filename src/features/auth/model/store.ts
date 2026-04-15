@@ -27,11 +27,7 @@ export const authStore = create<AuthStore>((set) => ({
 
   register: async ({ email, password, name }: { email: string; password: string; name: string }) => {
     const { error } = await supabase.auth.signUp({ email, password, options: { data: { name } } });
-
-    if (error) {
-      console.log(error);
-    } else {
-      set({ isAuthenticated: true });
-    }
+    if (error) throw error;
+    set({ isAuthenticated: true });
   },
 }));
