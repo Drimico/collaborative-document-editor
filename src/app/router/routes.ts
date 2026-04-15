@@ -1,13 +1,12 @@
 import { lazy } from "react";
-import BlankLayout from "../layouts/BlankLayout.tsx";
-import RootLayout from "../layouts/RootLayout.tsx";
+import { BlankLayout } from "../layouts/BlankLayout.tsx";
+import { RootLayout } from "../layouts/RootLayout.tsx";
 
-const Dashboard = lazy(() => import("../../pages/dashboard"));
-const Editor = lazy(() => import("../../pages/editor"));
-const Login = lazy(() => import("../../pages/login"));
-const Register = lazy(() => import("../../pages/register"));
-const NotFound = lazy(() => import("../../pages/notFound"));
-
+const Dashboard = lazy(() => import("../../pages/Dashboard"));
+const Editor = lazy(() => import("../../pages/Editor"));
+const Login = lazy(() => import("../../pages/Login"));
+const Register = lazy(() => import("../../pages/Register"));
+const NotFound = lazy(() => import("../../pages/NotFound"));
 
 export const routes = [
   {
@@ -44,4 +43,4 @@ export const routes = [
     element: NotFound,
     layout: BlankLayout,
   },
-]
+];

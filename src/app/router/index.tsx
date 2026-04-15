@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 type RouteConfig = (typeof routes)[number];
 
-const RoutesProvider = () => {
+export const RoutesProvider = () => {
   const router = useMemo(() => {
     const groupedRoutes = new Map<RouteConfig["layout"], RouteConfig[]>();
     
@@ -34,4 +34,3 @@ const RoutesProvider = () => {
 
   return <RouterProvider router={router} />;
 };
-export default RoutesProvider;

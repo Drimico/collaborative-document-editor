@@ -1,6 +1,6 @@
 import { CollaborativeEditor } from "../../shared/lib/quill/CollaborativeEditor";
 
-const Editor = () => {
+export const Editor = () => {
   return (
     <CollaborativeEditor
       sharedTypeName="quill"
@@ -9,4 +9,3 @@ const Editor = () => {
   );
 };
 
-export default Editor;

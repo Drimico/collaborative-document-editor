@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
-const RootLayout = () => {
+export const RootLayout = () => {
   return (
     <div>
       <nav>sidebar</nav>
@@ -14,4 +14,3 @@ const RootLayout = () => {
   );
 };
 
-export default RootLayout;

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
-const BlankLayout = () => {
+export const BlankLayout = () => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
@@ -11,4 +11,3 @@ const BlankLayout = () => {
   );
 };
 
-export default BlankLayout;

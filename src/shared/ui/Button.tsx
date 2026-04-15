@@ -6,7 +6,7 @@ interface ButtonProps {
   color: string;
   shadowSize: string;
 }
-const Button = ({ text, size, shadow, color, shadowSize }: ButtonProps) => {
+export const Button = ({ text, size, shadow, color, shadowSize }: ButtonProps) => {
   return (
     <button className={twMerge("text-2xl cursor-pointer relative", size)}>
       <div
@@ -21,5 +21,3 @@ const Button = ({ text, size, shadow, color, shadowSize }: ButtonProps) => {
     </button>
   );
 };
-
-export default Button;
