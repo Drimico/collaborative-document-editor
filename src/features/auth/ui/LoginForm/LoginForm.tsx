@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router";
 import { Button } from "../../../../shared/ui/Button";
 import useLogin from "../../lib/useLogin";
 
 export const LoginForm = () => {
   const { errorMessages, isLoading, loginForm, onLogin, setLoginForm } = useLogin();
+  const navigate = useNavigate();
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await onLogin(e);
@@ -52,6 +54,15 @@ export const LoginForm = () => {
         colorSize="w-54 h-10"
         shadowSize="w-55.5 h-11.5"
       />
+      <div className="flex flex-col items-center absolute bottom-2">
+        <span>Don't have an account?</span>
+        <button
+          className="cursor-pointer underline text-(--highlight)"
+          onClick={() => navigate("/register")}
+        >
+          Register
+        </button>
+      </div>
     </div>
   );
 };

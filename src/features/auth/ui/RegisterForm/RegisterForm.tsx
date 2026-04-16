@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../../../shared/ui/Button";
 import useRegister from "../../lib/useRegister";
 
 export const RegisterForm = () => {
   const { registerForm, setRegisterForm, errorMessages, isLoading, onRegister } = useRegister();
+  const navigate = useNavigate();
+
   const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await onRegister(e);
@@ -67,6 +70,15 @@ export const RegisterForm = () => {
         colorSize="w-54 h-10"
         shadowSize="w-55.5 h-11.5"
       />
+      <div className="flex flex-col items-center absolute bottom-2">
+        <span>Already have an account?</span>
+        <button
+          className="cursor-pointer underline text-(--highlight)"
+          onClick={() => navigate("/login")}
+        >
+          Log in
+        </button>
+      </div>
     </div>
   );
 };
