@@ -1,10 +1,13 @@
 import { RoutesProvider } from "../router";
+import { AuthProvider } from "./AuthProvider";
 import { YjsProvider } from "./YjsProvider";
 
 export const AppProviders = () => {
   return (
-    <YjsProvider roomName="quill-demo">
-      <RoutesProvider />
-    </YjsProvider>
+    <AuthProvider>
+      <YjsProvider roomName="quill-demo">
+        <RoutesProvider />
+      </YjsProvider>
+    </AuthProvider>
   );
 };
