@@ -3,10 +3,103 @@
   font-family: SN;
   src: url("/fonts/SNPro-Regular.ttf") format("truetype");
 }
+* {
+  @apply box-border;
+}
+input:focus {
+  outline: none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow:
+    var(--shadow-s),
+    0 0 0px 1000px var(--bg) inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  background-clip: content-box !important;
+  caret-color: var(--text) !important;
+}
 body {
+  width: 100vw;
+  min-height: 100%;
   box-sizing: border-box;
   background-color: #fef9c2;
   font-family: SN;
   scrollbar-gutter: stable;
-  margin: 0
+  overflow: hidden;
+  @apply bg-no-repeat bg-cover m-0 p-0;
+}
+@theme {
+  --font-sn: SN, sans-serif;
+  --breakpoint-xs: 40rem;
+  --breakpoint-xlg: 90rem;
+  --breakpoint-xxlg: 110rem;
+  --gradient: linear-gradient(0deg, var(--bg) 90%, var(--bg-light));
+  --bg-dark: var(--color-yellow-300);
+  --bg: var(--color-yellow-200);
+  --bg-light: var(--color-yellow-100);
+  --text: oklch(0.15 0.15 80);
+  --text-muted: oklch(0.4 0.15 80);
+  --highlight: oklch(0.9 0.15 80);
+  --highlight-hover: oklch(0.6 0.2 270);
+  --border: oklch(0.6 0.16 60);
+  --border-muted: oklch(0.7 0.15 80);
+  --primary: oklch(0.4 0.15 80);
+  --secondary: oklch(0.5 0.2 240);
+  --danger: oklch(0.5 0.3 30);
+  --light-danger: oklch(0.7 0.25 30);
+  --warning: oklch(0.5 0.15 100);
+  --success: oklch(0.5 0.15 160);
+  --info: oklch(0.8 0.2 260);
+  --shadow-s: 1px 1px 0px 1px;
+  --shadow-m: 2px 2px 0px 2px;
+  --shadow-l: 3px 3px 0px 3px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --gradient: linear-gradient(0deg, var(--bg) 90%, var(--bg-light));
+  --bg-dark: var(--color-yellow-950);
+  --bg: var(--color-yellow-900);
+  --bg-light: var(--color-yellow-800) --text: oklch(0.96 0.1 80);
+  --text-muted: oklch(0.76 0.1 80);
+  --highlight: oklch(0.2 0.2 20);
+  --highlight-hover: oklch(0.4 0.2 20);
+  --border: oklch(0.4 0.15 80);
+  --border-muted: oklch(0.3 0.15 80);
+  --primary: oklch(0.76 0.15 80);
+  --secondary: oklch(0.5 0.4 180);
+  --danger: oklch(0.5 0.3 30);
+  --light-danger: oklch(0.3 0.3 30);
+  --warning: oklch(0.7 0.15 100);
+  --success: oklch(0.7 0.15 160);
+  --info: oklch(0.2 0.2 260);
+  --shadow-s: 1px 1px 0px 1px;
+  --shadow-m: 2px 2px 0px 2px;
+  --shadow-l: 3px 3px 0px 3px;
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 12px;
+    height: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--highlight);
+    border-radius: 20px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: var(--highlight-hover);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    cursor: initial;
+  }
 }
