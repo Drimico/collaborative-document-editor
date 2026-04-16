@@ -5,13 +5,19 @@ interface ButtonProps {
   shadow: string;
   color: string;
   shadowSize: string;
+  onClick: (e:React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
 }
-export const Button = ({ text, size, shadow, color, shadowSize }: ButtonProps) => {
+export const Button = ({ text, size, shadow, color, shadowSize, onClick, disabled }: ButtonProps) => {
   return (
-    <button className={twMerge("text-2xl cursor-pointer relative", size)}>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={twMerge("text-2xl cursor-pointer relative", size)}
+    >
       <div
         className={twMerge(
-          `bg-${color} absolute w-full px-2 py-1 top-[5%] left-[1%] active:translate-0.5  transition-transform duration-100`,
+          `bg-${color} absolute w-full px-2 py-1 top-[5%] left-[1%] active:translate-0.5 transition-transform duration-100`,
           shadow,
         )}
       >
