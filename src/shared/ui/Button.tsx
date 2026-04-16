@@ -17,7 +17,7 @@ export const Button = ({ text, size, shadow, color, shadowSize, onClick, disable
     >
       <div
         className={twMerge(
-          `bg-${color} absolute w-full px-2 py-1 top-[5%] left-[1%] active:translate-0.5  transition-transform duration-100`,
+          `bg-${color} absolute w-full px-2 py-1 top-[5%] left-[1%] active:translate-0.5 transition-transform duration-100`,
           shadow,
         )}
       >
