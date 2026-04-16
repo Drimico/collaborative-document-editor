@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
 import { routes } from "./routes";
 import { useMemo } from "react";
+import { AuthGuard } from "./guards/AuthGuard";
 
 type RouteConfig = (typeof routes)[number];
 
 export const RoutesProvider = () => {
   const router = useMemo(() => {
     const groupedRoutes = new Map<RouteConfig["layout"], RouteConfig[]>();
-    
+
     routes.forEach((route) => {
       const layout = route.layout;
       if (!groupedRoutes.has(layout)) {
@@ -21,7 +22,23 @@ export const RoutesProvider = () => {
 
     for (const [layout, routes] of groupedRoutes) {
       const children: RouteObject[] = routes.map((route) => {
-        return route.index ? { index: true, Component: route.element } : { path: route.path?.slice(1), Component: route.element };
+        const PageComponent = route.element;
+        if (route.protected) {
+          return {
+            index: route.index,
+            path: route.path,
+            element: (
+              <AuthGuard>
+                <PageComponent/>
+              </AuthGuard>
+            ),
+          };
+        } else {
+          return {
+            path: route.path,
+            element: <PageComponent/>,
+          };
+        }
       });
 
       routeParents.push({
