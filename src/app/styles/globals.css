@@ -6,6 +6,22 @@
 * {
   @apply box-border;
 }
+input[type="color"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none; /* Remove any inner border you don't want */
+  border-radius: 100%;
+}
 input:focus {
   outline: none;
 }
@@ -25,7 +41,7 @@ body {
   width: 100vw;
   min-height: 100%;
   box-sizing: border-box;
-  background-color: #fef9c2;
+  background-color: var(--bg-light);
   font-family: SN;
   scrollbar-gutter: stable;
   overflow: hidden;
@@ -37,16 +53,16 @@ body {
   --breakpoint-xlg: 90rem;
   --breakpoint-xxlg: 110rem;
   --gradient: linear-gradient(0deg, var(--bg) 90%, var(--bg-light));
-  --bg-dark: var(--color-yellow-300);
-  --bg: var(--color-yellow-200);
-  --bg-light: var(--color-yellow-100);
+  --bg-dark: oklch(0.3 0.08 45); /* Dark espresso */
+  --bg: oklch(0.5 0.1 45); /* Rich mid-brown (like leather) */
+  --bg-light: oklch(0.9 0.08 45);
   --text: oklch(0.15 0.15 80);
   --text-muted: oklch(0.4 0.15 80);
   --highlight: oklch(0.5 0.4 250);
   --highlight-hover: oklch(0.6 0.2 270);
   --border: oklch(0.6 0.16 60);
   --border-muted: oklch(0.7 0.15 80);
-  --primary: oklch(0.4 0.15 80);
+  --primary: oklch(0.6 0.2 60);
   --secondary: oklch(0.5 0.2 240);
   --danger: oklch(0.5 0.3 30);
   --light-danger: oklch(0.7 0.25 30);
@@ -63,7 +79,8 @@ body {
   --gradient: linear-gradient(0deg, var(--bg) 90%, var(--bg-light));
   --bg-dark: var(--color-yellow-950);
   --bg: var(--color-yellow-900);
-  --bg-light: var(--color-yellow-800) --text: oklch(0.96 0.1 80);
+  --bg-light: var(--color-yellow-800);
+  --text: oklch(0.96 0.1 80);
   --text-muted: oklch(0.76 0.1 80);
   --highlight: oklch(0.2 0.2 20);
   --highlight-hover: oklch(0.4 0.2 20);

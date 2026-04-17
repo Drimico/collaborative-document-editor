@@ -65,7 +65,7 @@ export const RegisterForm = () => {
         onClick={handleRegister}
         text="Register"
         shadow="shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px]"
-        color="bg-yellow-200"
+        color="bg-(--bg)"
         buttonSize="w-55 h-10"
         colorSize="w-54 h-10"
         shadowSize="w-55.5 h-11.5"
