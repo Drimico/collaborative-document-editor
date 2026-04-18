@@ -3,10 +3,14 @@ import { Button } from "../../shared/ui/Button";
 import { useAuth } from "../../app/providers/AuthProvider";
 import { CircleUserRound, FilePenLine } from "lucide-react";
 import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
+import { useGetDocuments } from "./model/useGetDocuments";
+import { useNavigate } from "react-router";
 export const Sidebar = () => {
   const { user } = useAuth();
   const [userColor, setUserColor] = useState("red");
+  const navigate = useNavigate();
   const { create } = useCreateDocument();
+  const { documents } = useGetDocuments();
   // fix type any
   const name = user?.identities?.[0]?.identity_data?.name;
   return (
@@ -21,24 +25,32 @@ export const Sidebar = () => {
         shadowSize="w-55.5 h-11.5"
       />
       <div className="flex flex-col gap-4">
-        <div className="bg-(--bg-dark) w-full border-2 shadow-(--shadow-s) p-1">
-          <FilePenLine
-            size={30}
-            className="border-r-2"
-          />
-        </div>
-        <div className="bg-(--bg-dark) w-full border-2 shadow-(--shadow-s) p-1">
-          <FilePenLine
-            size={30}
-            className="border-r-2"
-          />
-        </div>
-        <div className="bg-(--bg-dark) w-full border-2 shadow-(--shadow-s) p-1">
-          <FilePenLine
-            size={30}
-            className="border-r-2"
-          />
-        </div>
+        {documents?.slice(0, 4).map((doc) => (
+          <div
+            onClick={() => {
+              navigate(`/documents/:${doc.id}`);
+            }}
+            key={doc.id}
+            className="bg-(--bg-dark) w-full border-2 shadow-(--shadow-s) flex justify-center items-center gap-4 cursor-pointer"
+          >
+            <FilePenLine
+              size={30}
+              className="border-r-2"
+            />
+            <div className="flex flex-col items-center">
+              <span>{doc.title}</span>
+              <span className="text-sm">
+                {new Date(doc.updated_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
       <div className="flex w-full h-fit justify-evenly items-center ">
         <span className="text-xl">{name}</span>
