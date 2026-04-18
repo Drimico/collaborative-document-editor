@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { Button } from "../../../shared/ui/Button";
-import { useAuth } from "../../providers/AuthProvider";
+import { Button } from "../../shared/ui/Button";
+import { useAuth } from "../../app/providers/AuthProvider";
 import { CircleUserRound, FilePenLine } from "lucide-react";
+import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
 export const Sidebar = () => {
   const { user } = useAuth();
   const [userColor, setUserColor] = useState("red");
-
+  const { create } = useCreateDocument();
   // fix type any
   const name = user?.identities?.[0]?.identity_data?.name;
   return (
     <div className="h-full w-full flex flex-col justify-between p-4 bg-(--bg) border-2 shadow-(--shadow-m)">
       <Button
+        onClick={create}
         text="New Document"
         color="bg-(--primary)"
         shadow="shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px]"
