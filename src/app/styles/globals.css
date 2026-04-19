@@ -107,14 +107,14 @@ body {
     background: transparent;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: var(--highlight);
+    background: var(--bg-dark);
     border-radius: 20px;
     border: 3px solid transparent;
     background-clip: content-box;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: var(--highlight-hover);
+    background: var(--bg-light);
     border: 3px solid transparent;
     background-clip: content-box;
     cursor: initial;

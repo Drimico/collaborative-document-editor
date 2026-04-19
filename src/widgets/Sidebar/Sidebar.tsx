@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { Button } from "../../shared/ui/Button";
 import { useAuth } from "../../app/providers/AuthProvider";
-import { CircleUserRound, FilePenLine } from "lucide-react";
+import { CircleUserRound, FilePenLine, Search } from "lucide-react";
 import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
 import { useGetDocuments } from "./model/useGetDocuments";
 import { useNavigate } from "react-router";
+import { useSearchDebounce } from "./model/useSearchDebounce";
 export const Sidebar = () => {
-  const { user } = useAuth();
   const [userColor, setUserColor] = useState("red");
+  const [search, setSearch] = useState("");
+  const { debounced } = useSearchDebounce(search);
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { create } = useCreateDocument();
-  const { documents } = useGetDocuments();
+  const { documents } = useGetDocuments({ search: debounced });
+
   // fix type any
   const name = user?.identities?.[0]?.identity_data?.name;
   return (
@@ -24,11 +28,19 @@ export const Sidebar = () => {
         buttonSize="w-55 h-10"
         shadowSize="w-55.5 h-11.5"
       />
-      <div className="flex flex-col gap-4">
-        {documents?.slice(0, 4).map((doc) => (
+      <div className="bg-(--bg-dark) border-2 shadow-(--shadow-s) p-1 flex ">
+        <Search />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col gap-4 h-1/2 overflow-y-auto scrollbar-thin">
+        {documents?.map((doc) => (
           <div
             onClick={() => {
-              navigate(`/documents/:${doc.id}`);
+              navigate(`/documents/${doc.id}`);
             }}
             key={doc.id}
             className="bg-(--bg-dark) w-full border-2 shadow-(--shadow-s) flex justify-center items-center gap-4 cursor-pointer"
