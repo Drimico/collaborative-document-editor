@@ -1,12 +1,16 @@
-import { FilePenLine } from "lucide-react";
+import { ChevronLeft, ChevronRight, FilePenLine } from "lucide-react";
 import { useCreateDocument } from "../../../features/document-creation/model/useCreateDocument";
 import { Button } from "../../../shared/ui/Button";
 import { useGetDocuments } from "../model/useGetDocuments";
 import { useNavigate } from "react-router";
+import { usePagination } from "../../../shared/hooks/usePagination";
 
 export const DashboardScreen = () => {
   const { create, loading } = useCreateDocument();
-  const { documents } = useGetDocuments();
+  const { nextPage, prevPage, offset, start, end, page } = usePagination();
+  console.log(page);
+
+  const { documents, totalCount } = useGetDocuments({ start, end });
   const navigate = useNavigate();
   const formatRelativeTime = (date: Date) => {
     const currentDate = new Date().getTime();
@@ -35,28 +39,50 @@ export const DashboardScreen = () => {
         <span className="font-bold text-(--text-muted)">Start writing,</span>
         <span className="text-(--text)">or open a document.</span>
       </span>
-      <div className="flex flex-wrap items-center gap-4 w-fit text-shadow-[1px_1px_1px_black]">
-        {documents?.map((doc) => (
-          <div
-            key={doc.id}
-            onClick={() => {
-              navigate(`/documents/${doc.id}`);
-            }}
-            className="w-60 h-40 bg-(--bg) rounded-2xl p-2 flex flex-col items-center shadow-(--shadow-m) cursor-pointer"
-          >
-            <div className="flex items-center gap-4 h-1/2">
-              <FilePenLine
-                size={30}
-                color="var(--text-muted)"
-              />
-              <div className="flex flex-col">
-                <span>{doc.title}</span>
-                Edited {formatRelativeTime(doc.updated_at)}
+      <div className="flex justify-center items-center">
+        <button
+          disabled={page === 0}
+          onClick={prevPage}
+          className="w-fit h-fit"
+        >
+          <ChevronLeft
+            size={50}
+            className={`${page !== 0 ? "hover:text-(--text) cursor-pointer" : ""}`}
+          />
+        </button>
+        <div className="flex flex-wrap items-center gap-4 w-300 h-130 justify-center text-shadow-[1px_1px_1px_black]">
+          {documents?.map((doc) => (
+            <div
+              key={doc.id}
+              onClick={() => {
+                navigate(`/documents/${doc.id}`);
+              }}
+              className="w-60 h-40 bg-(--bg) rounded-2xl p-2 flex flex-col items-center shadow-(--shadow-m) cursor-pointer"
+            >
+              <div className="flex items-center gap-4 h-1/2">
+                <FilePenLine
+                  size={30}
+                  color="var(--text-muted)"
+                />
+                <div className="flex flex-col">
+                  <span>{doc.title}</span>
+                  Edited {formatRelativeTime(doc.updated_at)}
+                </div>
               </div>
+              <div className="border-t w-full h-1/2">Contributors:</div>
             </div>
-            <div className="border-t w-full h-1/2">Contributors:</div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <button
+          disabled={start + offset >= totalCount}
+          onClick={nextPage}
+          className="w-fit h-fit"
+        >
+          <ChevronRight
+            size={50}
+            className={`${start + offset < totalCount ? "hover:text-(--text) cursor-pointer" : ""}`}
+          />
+        </button>
       </div>
       <div>
         <Button

@@ -12,7 +12,7 @@ export const useCreateDocument = () => {
     if (!user?.id) throw new Error("user is not authenticated");
     const { data, error } = await createDocument({ userId: user.id });
     if (error || !data) throw new Error("Failed to create document");
-    navigate(`/documents/:${data.id}`);
+    navigate(`/documents/${data.id}`);
     setLoading(false);
   };
   return { create, loading };
