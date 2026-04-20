@@ -9,7 +9,7 @@ export const RootLayout = () => {
         <Sidebar />
       </nav>
       <main className="flex-1 h-full overflow-y-auto ">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense>
           <Outlet />
         </Suspense>
       </main>

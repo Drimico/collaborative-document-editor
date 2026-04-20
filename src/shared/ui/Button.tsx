@@ -1,27 +1,21 @@
 import { twMerge } from "tailwind-merge";
 interface ButtonProps {
   text: string;
-  buttonSize: string;
-  shadow: string;
-  color: string;
-  colorSize: string;
-  shadowSize: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  buttonClass: string;
+  frontClass: string;
+  shadowClass: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
 }
-export const Button = ({ text, buttonSize, shadow, color, colorSize, shadowSize, onClick, disabled }: ButtonProps) => {
+export const Button = ({ text, buttonClass, frontClass, shadowClass, onClick, disabled }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={twMerge("text-2xl cursor-pointer relative", buttonSize)}
+      className={twMerge("text-2xl cursor-pointer relative rounded-xl text-shadow-[2px_2px_2px_black]", buttonClass)}
     >
-      <div
-        className={twMerge(`absolute  px-2 py-1 top-[5%] left-[1%] active:translate-0.5 transition-transform duration-100`, shadow, colorSize, color)}
-      >
-        {text}
-      </div>
-      <div className={twMerge("bg-black", shadowSize)} />
+      <div className={twMerge(`absolute transition-transform duration-100 flex justify-center items-center rounded-xl`, frontClass)}>{text}</div>
+      <div className={twMerge(" rounded-2xl", shadowClass)} />
     </button>
   );
 };

@@ -1,58 +1,65 @@
 import { useState } from "react";
-import { Button } from "../../shared/ui/Button";
 import { useAuth } from "../../app/providers/AuthProvider";
-import { CircleUserRound, FilePenLine, Search } from "lucide-react";
+import { ChevronLeft, CircleUserRound, FilePenLine, Search } from "lucide-react";
 import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
 import { useGetDocuments } from "./model/useGetDocuments";
-import { useNavigate } from "react-router";
-import { useSearchDebounce } from "./model/useSearchDebounce";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "../../shared/ui/Button";
 export const Sidebar = () => {
   const [userColor, setUserColor] = useState("red");
-  const [search, setSearch] = useState("");
-  const { debounced } = useSearchDebounce(search);
+  const { documents, search, setSearch } = useGetDocuments();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { create } = useCreateDocument();
-  const { documents } = useGetDocuments({ search: debounced });
-
+  const { create, loading } = useCreateDocument();
+  const { id } = useParams();
   // fix type any
   const name = user?.identities?.[0]?.identity_data?.name;
   return (
-    <div className="h-full w-full flex flex-col justify-between p-4 bg-(--bg) border-2 shadow-(--shadow-m)">
+    <div className="h-full w-full flex flex-col justify-between items-center px-4 py-6 animate-fadeRight bg-cover bg-no-repeat bg-(--bg) shadow-(--shadow-m)">
+      {id ? (
+        <div
+          onClick={() => navigate("/dashboard")}
+          className="bg-(--bg-light) rounded-2xl border p-1 flex text-(--text) shadow-(--shadow-s) cursor-pointer"
+        >
+          <ChevronLeft /> Back to Dashboard
+        </div>
+      ) : null}
       <Button
-        onClick={create}
+        disabled={loading}
         text="New Document"
-        color="bg-(--primary)"
-        shadow="shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px]"
-        colorSize="w-54 h-10"
-        buttonSize="w-55 h-10"
-        shadowSize="w-55.5 h-11.5"
+        buttonClass="w-54 h-10"
+        shadowClass="w-55 h-11.5 bg-black/70"
+        frontClass="w-53.5 h-10 bg-(--bg) shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px_black] active:translate-0.5 top-0.5 left-0.5"
+        onClick={create}
       />
-      <div className="bg-(--bg-dark) border-2 shadow-(--shadow-s) p-1 flex ">
-        <Search />
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-col gap-4 h-1/2 overflow-y-auto scrollbar-thin">
-        {documents?.map((doc) => (
+      <div className="flex flex-col gap-4 h-[60%]">
+        <div className="bg-black/30 p-1 flex items-center gap-2 rounded-sm shadow-[inset_0_0_3px_1px_black]/50">
+          <Search size={25} />
+          <input
+            placeholder="Search..."
+            className="w-50 "
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="w-full flex justify-center text-shadow-[2px_2px_2px_black] text-2xl">Recent Documents</div>
+        {documents?.slice(0, 6).map((doc) => (
           <div
             onClick={() => {
               navigate(`/documents/${doc.id}`);
             }}
             key={doc.id}
-            className="bg-(--bg-dark) w-full border-2 shadow-(--shadow-s) flex justify-center items-center gap-4 cursor-pointer"
+            className="w-full flex justify-center items-center gap-4 px-2 cursor-pointer shadow-(--shadow-s) text-shadow-[1px_1px_1px_black] bg-(--bg-light) hover:bg-black/30 relative rounded-xl hover:before:content-[''] hover:before:absolute hover:before:inset-y-3 hover:before:left-0 hover:before:w-0.5 hover:before:bg-emerald-400 hover:before:rounded-lg hover:before:shadow-[-5px_0px_10px_1px_green]"
           >
             <FilePenLine
               size={30}
-              className="border-r-2"
+              color="var(--text-muted)"
             />
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center p-2">
               <span>{doc.title}</span>
-              <span className="text-sm">
-                {new Date(doc.updated_at).toLocaleDateString("en-US", {
+              <span className="text-sm text-white/70">
+                {new Date(doc.created_at).toLocaleDateString("en-US", {
                   month: "short",
                   hour: "2-digit",
                   minute: "2-digit",
@@ -64,19 +71,22 @@ export const Sidebar = () => {
           </div>
         ))}
       </div>
-      <div className="flex w-full h-fit justify-evenly items-center ">
-        <span className="text-xl">{name}</span>
-        <div className="relative flex items-center justify-center size-10">
-          <input
-            className="size-11 absolute"
-            type="color"
-            value={userColor}
-            onChange={(e) => setUserColor(e.target.value)}
-          />
-          <CircleUserRound
-            size={50}
-            className="absolute pointer-events-none"
-          />
+      <div className="flex flex-col w-full h-15 justify-between items-center ">
+        <div className="w-full h-0.5 shadow-(--shadow-l) bg-(--text-muted) rounded-full" />
+        <div className="flex justify-center items-center gap-5">
+          <div className="relative flex items-center justify-center size-10">
+            <input
+              className="size-11 absolute"
+              type="color"
+              value={userColor}
+              onChange={(e) => setUserColor(e.target.value)}
+            />
+            <CircleUserRound
+              size={50}
+              className="absolute pointer-events-none"
+            />
+          </div>
+          <span className="text-xl">{name}</span>
         </div>
       </div>
     </div>

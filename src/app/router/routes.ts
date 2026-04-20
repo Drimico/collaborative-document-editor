@@ -24,7 +24,7 @@ export const routes = [
   {
     path: "/documents/:id",
     element: Editor,
-    layout: BlankLayout,
+    layout: RootLayout,
     protected: true,
   },
 
