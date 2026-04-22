@@ -1,19 +1,34 @@
-import { useState } from "react";
 import { useAuth } from "../../app/providers/AuthProvider";
 import { ChevronLeft, CircleUserRound, FilePenLine, Search } from "lucide-react";
 import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
 import { useGetDocuments } from "./model/useGetDocuments";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../shared/ui/Button";
+import { useAwarenessStore } from "../../shared/stores/awarenessStore";
+import { useEffect, useRef } from "react";
 export const Sidebar = () => {
-  const [userColor, setUserColor] = useState("red");
   const { documents, search, setSearch } = useGetDocuments();
+  const color = useAwarenessStore((state) => state.color);
+  const changeColor = useAwarenessStore((state) => state.changeColor);
   const { user } = useAuth();
   const navigate = useNavigate();
   const { create, loading } = useCreateDocument();
   const { id } = useParams();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   // fix type any
   const name = user?.identities?.[0]?.identity_data?.name;
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+    const handler = (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      changeColor(target.value);
+    };
+    input.addEventListener("change", handler);
+    return () => input.removeEventListener("change", handler);
+  }, [changeColor]);
   return (
     <div className="h-full w-full flex flex-col justify-between items-center px-4 py-6 animate-fadeRight bg-cover bg-no-repeat bg-(--bg) shadow-(--shadow-m)">
       {id ? (
@@ -76,10 +91,10 @@ export const Sidebar = () => {
         <div className="flex justify-center items-center gap-5">
           <div className="relative flex items-center justify-center size-10">
             <input
+              ref={inputRef}
+              defaultValue={color}
               className="size-11 absolute"
               type="color"
-              value={userColor}
-              onChange={(e) => setUserColor(e.target.value)}
             />
             <CircleUserRound
               size={50}
