@@ -54,8 +54,8 @@ body {
   --breakpoint-xlg: 90rem;
   --breakpoint-xxlg: 110rem;
   --gradient: linear-gradient(0deg, var(--bg) 90%, var(--bg-light));
-  --bg-dark: #582f0e; 
-  --bg: #bc6c25; 
+  --bg-dark: #582f0e;
+  --bg: #bc6c25;
   --bg-light: #dda15e;
   --text: #606c38;
   --text-muted: #283618;
@@ -162,3 +162,19 @@ body {
 .delay-500 {
   animation-delay: 500ms;
 }
+
+/* .ql-editor {
+  border: none
+}
+.ql-container.ql-snow{
+ border: none
+}
+.quill {
+  border: none;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+.ql-snow{
+  border: none
+} */
