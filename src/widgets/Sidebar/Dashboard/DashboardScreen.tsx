@@ -8,7 +8,6 @@ import { usePagination } from "../../../shared/hooks/usePagination";
 export const DashboardScreen = () => {
   const { create, loading } = useCreateDocument();
   const { nextPage, prevPage, offset, start, end, page } = usePagination();
-  console.log(page);
 
   const { documents, totalCount } = useGetDocuments({ start, end });
   const navigate = useNavigate();
@@ -57,14 +56,15 @@ export const DashboardScreen = () => {
               onClick={() => {
                 navigate(`/documents/${doc.id}`);
               }}
-              className="w-60 h-40 bg-(--bg) rounded-2xl p-2 flex flex-col items-center shadow-(--shadow-m) cursor-pointer"
+              className="w-60 h-40 bg-(--bg) rounded-2xl p-2 flex flex-col items-center shadow-(--shadow-m) cursor-pointer break-all"
             >
-              <div className="flex items-center gap-4 h-1/2">
+              <div className="flex items-center gap-4 h-1/2 w-full">
                 <FilePenLine
                   size={30}
                   color="var(--text-muted)"
+                  className="shrink-0"
                 />
-                <div className="flex flex-col">
+                <div className="flex flex-col w- ">
                   <span>{doc.title}</span>
                   Edited {formatRelativeTime(doc.updated_at)}
                 </div>

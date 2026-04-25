@@ -24,6 +24,7 @@ export const useAutosave = (editorRef: RefObject<ReactQuill | null>) => {
     });
     return () => {
       clearTimeout(timer.current);
+      setStatus("saved");
       doc.off("update", event);
     };
   }, [doc, editorRef, id, setStatus]);

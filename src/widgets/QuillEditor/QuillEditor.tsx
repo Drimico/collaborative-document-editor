@@ -6,7 +6,7 @@ import { useYjs } from "../../app/providers/YjsProvider";
 import "react-quill-new/dist/quill.snow.css";
 import { useAuth } from "../../app/providers/AuthProvider";
 import { useAwarenessStore } from "../../shared/stores/awarenessStore";
-import { useAutosave } from "../../features/document-persistence/model/useAutosave";
+import { useAutosave } from "../../features/document-persistence/model/useAutosaveContent";
 
 export const QuillEditor = ({ sharedTypeName, placeholder }: { sharedTypeName: string; placeholder: string }) => {
   const { doc, provider } = useYjs();

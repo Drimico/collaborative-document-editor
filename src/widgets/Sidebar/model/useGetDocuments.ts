@@ -3,9 +3,11 @@ import { getDocuments } from "../../../entities/document/api/getDocuments";
 import { type Document } from "../../../entities/model/types";
 import { useAuth } from "../../../app/providers/AuthProvider";
 import { useSearchDebounce } from "./useSearchDebounce";
+import { useAutosaveStore } from "../../../shared/stores/autosaveStore";
 
 export const useGetDocuments = ({ start = 0, end = 12 }: { start?: number; end?: number } = {}) => {
   const [documents, setDocuments] = useState<Document[]>();
+  const lastUpdated = useAutosaveStore((state) => state.lastUpdated);
   const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState("");
   const { debounced } = useSearchDebounce(search);
@@ -19,6 +21,6 @@ export const useGetDocuments = ({ start = 0, end = 12 }: { start?: number; end?:
       setTotalCount(count ?? 0);
     };
     result();
-  }, [user?.id, debounced, start, end]);
+  }, [user?.id, debounced, start, end, lastUpdated]);
   return { documents, search, setSearch, totalCount };
 };

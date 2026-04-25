@@ -5,19 +5,23 @@ export const SaveIndicator = () => {
   const status = useAutosaveStore((state) => state.status);
 
   return (
-    <div className={`${status === "idle" ? "text-gray-200" : ""}`}>
-      {status === "idle" ? (
-        <Cloud size={30} />
-      ) : status === "saving" ? (
-        <div className="relative w-fit h-fit">
-          <Cloud size={30} />
+    <div className="relative w-fit h-fit">
+      {status === "saving" ? (
+        <>  
+          <Cloud
+            size={30}
+            className="text-(--secondary)"
+          />
           <Settings
             size={20}
-            className="absolute -top-2 -right-2 animate-spin"
+            className="absolute -top-2 -right-2 animate-spin text-(--secondary)"
           />
-        </div>
+        </>
       ) : (
-        <CloudCheck size={30} />
+        <CloudCheck
+          size={30}
+          className="text-(--text)"
+        />
       )}
     </div>
   );

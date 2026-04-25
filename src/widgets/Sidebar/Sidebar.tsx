@@ -48,6 +48,7 @@ export const Sidebar = () => {
         onClick={create}
       />
       <div className="flex flex-col gap-4 h-[60%]">
+        <div className="w-full flex justify-center text-shadow-[2px_2px_2px_black] text-2xl">Recent Documents</div>
         <div className="bg-black/30 p-1 flex items-center gap-2 rounded-sm shadow-[inset_0_0_3px_1px_black]/50">
           <Search size={25} />
           <input
@@ -58,21 +59,21 @@ export const Sidebar = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="w-full flex justify-center text-shadow-[2px_2px_2px_black] text-2xl">Recent Documents</div>
         {documents?.slice(0, 6).map((doc) => (
           <div
             onClick={() => {
               navigate(`/documents/${doc.id}`);
             }}
             key={doc.id}
-            className="w-full flex justify-center items-center gap-4 px-2 cursor-pointer shadow-(--shadow-s) text-shadow-[1px_1px_1px_black] bg-(--bg-light) hover:bg-black/30 relative rounded-xl hover:before:content-[''] hover:before:absolute hover:before:inset-y-3 hover:before:left-0 hover:before:w-0.5 hover:before:bg-emerald-400 hover:before:rounded-lg hover:before:shadow-[-5px_0px_10px_1px_green]"
+            className="w-full flex justify-between overflow-hidden items-center px-4 cursor-pointer shadow-(--shadow-s) text-shadow-[1px_1px_1px_black] bg-(--bg-light) hover:bg-black/30 relative rounded-xl hover:before:content-[''] hover:before:absolute hover:before:inset-y-3 hover:before:left-0 hover:before:w-0.5 hover:before:bg-emerald-400 hover:before:rounded-lg hover:before:shadow-[-5px_0px_10px_1px_green]"
           >
             <FilePenLine
               size={30}
               color="var(--text-muted)"
+              className="shrink-0"
             />
-            <div className="flex flex-col items-center p-2">
-              <span>{doc.title}</span>
+            <div className="flex flex-col items-center py-2 pr-4 w-0 flex-1">
+              <span className="break-all text-center w-full">{doc.title}</span>
               <span className="text-sm text-white/70">
                 {new Date(doc.created_at).toLocaleDateString("en-US", {
                   month: "short",
