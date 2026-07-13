@@ -1,4 +1,4 @@
-import { ChevronLeft, FilePenLine, Loader2, Search, X } from "lucide-react";
+import { ChevronLeft, FilePenLine, Loader2, Search, Share2, X } from "lucide-react";
 import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
 import { useGetDocuments } from "../../features/document-list/model/useGetDocuments";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,8 +6,11 @@ import { Button } from "../../shared/ui/Button";
 import { ProfilePopup } from "./ui/ProfilePopup";
 import { useState } from "react";
 import { useDeleteDocument } from "../../features/document-deletion/model/useDeleteDocument";
+import { NotificationPanel } from "./ui/NotificationsPanel";
+import { ShareModal } from "./ui/ShareModal";
 
 export const Sidebar = () => {
+  const [shareOpen, setShareOpen] = useState(false);
   const [search, setSearch] = useState("");
   const { documents } = useGetDocuments();
   const navigate = useNavigate();
@@ -23,11 +26,26 @@ export const Sidebar = () => {
   return (
     <div className="h-full w-full flex flex-col justify-between items-center px-4 py-6 animate-fadeRight bg-cover bg-no-repeat bg-(--bg) shadow-(--shadow-m)">
       {id ? (
-        <div
-          onClick={() => navigate("/dashboard")}
-          className="bg-(--bg-light) rounded-2xl border p-1 flex text-(--text) shadow-(--shadow-s) cursor-pointer"
-        >
-          <ChevronLeft /> Back to Dashboard
+        <div className="flex flex-col items-center gap-2 w-full">
+          <div
+            onClick={() => navigate("/dashboard")}
+            className="bg-(--bg-light) rounded-2xl border p-1 flex text-(--text) shadow-(--shadow-s) cursor-pointer"
+          >
+            <ChevronLeft /> Back to Dashboard
+          </div>
+          <button
+            onClick={() => setShareOpen(true)}
+            className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-(--bg-light) border border-white/10 text-(--text-muted) hover:text-(--text) hover:bg-black/30 shadow-(--shadow-s) transition-colors text-sm cursor-pointer"
+          >
+            <Share2 size={16} />
+            Share
+          </button>
+          {shareOpen && (
+            <ShareModal
+              documentId={id}
+              onClose={() => setShareOpen(false)}
+            />
+          )}
         </div>
       ) : null}
       <Button
@@ -96,7 +114,13 @@ export const Sidebar = () => {
           </div>
         ))}
       </div>
-      <ProfilePopup />
+      <div className="w-full flex flex-col gap-3">
+        <div className="w-full h-0.5 bg-(--text-muted) shadow-(--shadow-l) rounded-full" />
+        <div className="flex items-center gap-10 w-full px-2">
+          <NotificationPanel />
+          <ProfilePopup />
+        </div>
+      </div>
     </div>
   );
 };
