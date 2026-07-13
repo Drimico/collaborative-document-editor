@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authStore } from "../model/store";
+import { authStore } from "../model/authStore";
 import { AuthError } from "@supabase/supabase-js";
-
+import { loginSchema } from "./schemas";
 const useLogin = () => {
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -12,24 +12,26 @@ const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const login = authStore((s) => s.login);
   const navigate = useNavigate();
+
   const onLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e) e.preventDefault();
-    const newErrors: Record<string, string> = {};
-    if (!loginForm.email) newErrors.email = "Email is required";
-    if (!loginForm.password) newErrors.password = "Password is required";
-    if (!loginForm.email) newErrors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginForm.email)) newErrors.email = "Please enter a valid email address";
-    if (!loginForm.password) newErrors.password = "Password is required";
-    else if (loginForm.password.length < 6) newErrors.password = "Password must be at least 6 characters";
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrorMessages(newErrors);
+    const result = loginSchema.safeParse(loginForm);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        const field = issue.path.join(".");
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = issue.message;
+        }
+      }
+      setErrorMessages(fieldErrors);
       return;
     }
 
     setIsLoading(true);
     try {
-      await login({ email: loginForm.email, password: loginForm.password });
+      await login(result.data);
 
       navigate("/dashboard");
     } catch (error) {

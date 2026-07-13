@@ -3,6 +3,7 @@ import { supabase } from "../../shared/lib/supabase";
 import type { User } from "@supabase/supabase-js";
 
 const AuthContext = createContext<{ user: User | null; loading: boolean }>({ user: null, loading: true });
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

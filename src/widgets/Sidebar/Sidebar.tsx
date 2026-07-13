@@ -1,34 +1,25 @@
-import { useAuth } from "../../app/providers/AuthProvider";
-import { ChevronLeft, CircleUserRound, FilePenLine, Search } from "lucide-react";
+import { ChevronLeft, FilePenLine, Loader2, Search, X } from "lucide-react";
 import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
-import { useGetDocuments } from "./model/useGetDocuments";
+import { useGetDocuments } from "../../features/document-list/model/useGetDocuments";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../shared/ui/Button";
-import { useAwarenessStore } from "../../shared/stores/awarenessStore";
-import { useEffect, useRef } from "react";
+import { ProfilePopup } from "./ui/ProfilePopup";
+import { useState } from "react";
+import { useDeleteDocument } from "../../features/document-deletion/model/useDeleteDocument";
+
 export const Sidebar = () => {
-  const { documents, search, setSearch } = useGetDocuments();
-  const color = useAwarenessStore((state) => state.color);
-  const changeColor = useAwarenessStore((state) => state.changeColor);
-  const { user } = useAuth();
+  const [search, setSearch] = useState("");
+  const { documents } = useGetDocuments();
   const navigate = useNavigate();
-  const { create, loading } = useCreateDocument();
+  const { create } = useCreateDocument();
+  const { remove, deletingId } = useDeleteDocument();
   const { id } = useParams();
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // fix type any
-  const name = user?.identities?.[0]?.identity_data?.name;
+  const handleDelete = async (e: React.MouseEvent, docId: number) => {
+    e.stopPropagation();
+    await remove(docId);
+  };
 
-  useEffect(() => {
-    const input = inputRef.current;
-    if (!input) return;
-    const handler = (e: Event) => {
-      const target = e.target as HTMLInputElement;
-      changeColor(target.value);
-    };
-    input.addEventListener("change", handler);
-    return () => input.removeEventListener("change", handler);
-  }, [changeColor]);
   return (
     <div className="h-full w-full flex flex-col justify-between items-center px-4 py-6 animate-fadeRight bg-cover bg-no-repeat bg-(--bg) shadow-(--shadow-m)">
       {id ? (
@@ -40,7 +31,6 @@ export const Sidebar = () => {
         </div>
       ) : null}
       <Button
-        disabled={loading}
         text="New Document"
         buttonClass="w-54 h-10"
         shadowClass="w-55 h-11.5 bg-black/70"
@@ -65,8 +55,27 @@ export const Sidebar = () => {
               navigate(`/documents/${doc.id}`);
             }}
             key={doc.id}
-            className="w-full flex justify-between overflow-hidden items-center px-4 cursor-pointer shadow-(--shadow-s) text-shadow-[1px_1px_1px_black] bg-(--bg-light) hover:bg-black/30 relative rounded-xl hover:before:content-[''] hover:before:absolute hover:before:inset-y-3 hover:before:left-0 hover:before:w-0.5 hover:before:bg-emerald-400 hover:before:rounded-lg hover:before:shadow-[-5px_0px_10px_1px_green]"
+            className="w-full flex justify-between overflow-hidden items-center px-4 cursor-pointer shadow-(--shadow-s) text-shadow-[1px_1px_1px_black] bg-(--bg-light) hover:bg-black/30 rounded-xl hover:before:content-[''] hover:before:absolute hover:before:inset-y-3 hover:before:left-0 hover:before:w-0.5 hover:before:bg-emerald-400 hover:before:rounded-lg hover:before:shadow-[-5px_0px_10px_1px_green] relative group"
           >
+            <button
+              onClick={(e) => handleDelete(e, doc.id)}
+              disabled={deletingId === doc.id}
+              className="absolute top-1/2 -translate-y-1/2 right-2 
+             opacity-0 group-hover:opacity-100 transition-all duration-200 
+             w-6 h-6 flex items-center justify-center rounded-full cursor-pointer
+             text-white/40 group-hover:text-red-400 
+             group-hover:bg-black/20 
+             group-hover:shadow-[0_0_10px_rgba(239,68,68,0.6),0_0_20px_rgba(239,68,68,0.2)]"
+            >
+              {deletingId === doc.id ? (
+                <Loader2
+                  size={12}
+                  className="animate-spin"
+                />
+              ) : (
+                <X size={12} />
+              )}
+            </button>
             <FilePenLine
               size={30}
               color="var(--text-muted)"
@@ -87,24 +96,7 @@ export const Sidebar = () => {
           </div>
         ))}
       </div>
-      <div className="flex flex-col w-full h-15 justify-between items-center ">
-        <div className="w-full h-0.5 shadow-(--shadow-l) bg-(--text-muted) rounded-full" />
-        <div className="flex justify-center items-center gap-5">
-          <div className="relative flex items-center justify-center size-10">
-            <input
-              ref={inputRef}
-              defaultValue={color}
-              className="size-11 absolute"
-              type="color"
-            />
-            <CircleUserRound
-              size={50}
-              className="absolute pointer-events-none"
-            />
-          </div>
-          <span className="text-xl">{name}</span>
-        </div>
-      </div>
+      <ProfilePopup />
     </div>
   );
 };

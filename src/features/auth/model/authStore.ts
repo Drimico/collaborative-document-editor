@@ -14,10 +14,9 @@ export const authStore = create<AuthStore>(() => ({
   },
   logout: async () => {
     const { error } = await supabase.auth.signOut();
-
     if (error) {
       console.log(error);
-    } 
+    }
   },
 
   register: async ({ email, password, name }: { email: string; password: string; name: string }) => {

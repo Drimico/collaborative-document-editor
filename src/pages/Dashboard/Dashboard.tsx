@@ -1,4 +1,4 @@
-import { DashboardScreen } from "../../widgets/Sidebar/Dashboard/DashboardScreen";
+import { DashboardScreen } from "../../widgets/Dashboard/DashboardScreen";
 
 export const Dashboard = () => {
   return <DashboardScreen />;
