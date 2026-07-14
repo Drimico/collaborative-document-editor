@@ -37,9 +37,7 @@ export const DashboardScreen = () => {
           </div>
           <Button
             text="New Document"
-            buttonClass="w-80 h-16"
-            shadowClass="w-81 h-18 bg-black/90"
-            frontClass="w-79 h-16 bg-(--bg) shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px_black] active:translate-1 top-1 left-1 text-2xl"
+            size="lg"
             onClick={create}
           />
         </div>
@@ -113,9 +111,7 @@ export const DashboardScreen = () => {
           <div>
             <Button
               text="New Document"
-              buttonClass="w-108 h-20"
-              shadowClass="w-109.5 h-22.5 bg-black/90"
-              frontClass="w-107 h-20 bg-(--bg) shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px_black] active:translate-1 top-1 left-1 text-3xl"
+              size="xl"
               onClick={create}
             />
           </div>

@@ -32,11 +32,11 @@ export const ShareModal = ({ documentId, onClose }: Props) => {
               size={18}
               className="text-(--text-muted)"
             />
-            <span className="font-semibold text-(--text)">Share Document</span>
+            <span className="font-semibold text-(--text-muted)">Share Document</span>
           </div>
           <button
             onClick={onClose}
-            className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-black/30 text-(--text-muted) hover:text-(--text) transition-colors"
+            className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-black/30 text-(--text-muted) hover:text-(--text) transition-colors cursor-pointer"
           >
             <X size={16} />
           </button>
@@ -44,7 +44,7 @@ export const ShareModal = ({ documentId, onClose }: Props) => {
 
         {/* Search */}
         <div className="px-4 pt-3 pb-2">
-          <div className="flex items-center gap-2 bg-black/30 px-3 py-2 rounded-lg shadow-[inset_0_0_3px_1px_black]/50">
+          <div className="flex items-center gap-2 bg-black/20 px-3 py-2 rounded-lg shadow-[inset_0_0_3px_1px_black]/50">
             <Search
               size={16}
               className="text-(--text-muted) shrink-0"
@@ -54,13 +54,13 @@ export const ShareModal = ({ documentId, onClose }: Props) => {
               placeholder="Search users..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-transparent text-sm w-full outline-none text-(--text) placeholder:text-(--text-muted)"
+              className="bg-transparent text-sm w-full outline-none text-(--text-muted) placeholder:text-(--text-muted)"
             />
           </div>
         </div>
 
         {/* List */}
-        <div className="flex-1 overflow-y-auto px-2 pb-4">
+        <div className="flex flex-col overflow-y-auto px-4 pb-4 gap-2">
           {loading ? (
             <div className="flex items-center justify-center py-10 text-(--text-muted) text-sm">Loading...</div>
           ) : filtered.length === 0 ? (

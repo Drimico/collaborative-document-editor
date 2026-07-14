@@ -52,7 +52,8 @@ export const ProfilePopup = () => {
         />
         <CircleUserRound
           size={50}
-          className="absolute pointer-events-none group-hover:text-(--text) transition-colors duration-200"
+          style={{ color }}
+          className="absolute pointer-events-none transition-colors duration-200"
         />
       </div>
       <span className="text-xl font-medium tracking-wide">{name}</span>
@@ -75,7 +76,7 @@ export const ProfilePopup = () => {
             <div className="flex flex-col items-center gap-1">
               <CircleUserRound
                 size={40}
-                className="text-(--text-muted)"
+                style={{ color }}
               />
               <span className="text-sm font-semibold text-(--text-muted)">{name}</span>
             </div>

@@ -64,9 +64,6 @@ export const RegisterForm = () => {
         disabled={isLoading}
         onClick={handleRegister}
         text="Register"
-        buttonClass="w-54 h-10"
-        shadowClass="w-55 h-11.5 bg-black/70"
-        frontClass="w-53.5 h-10 bg-(--bg) shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px_black] active:translate-0.5 top-0.5 left-0.5"
       />
       <div className="flex flex-col items-center absolute bottom-2">
         <span>Already have an account?</span>

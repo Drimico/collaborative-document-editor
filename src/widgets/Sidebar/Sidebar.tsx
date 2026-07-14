@@ -1,4 +1,4 @@
-import { ChevronLeft, FilePenLine, Loader2, Search, Share2, X } from "lucide-react";
+import { FilePenLine, Loader2, Search, Share2, X } from "lucide-react";
 import { useCreateDocument } from "../../features/document-creation/model/useCreateDocument";
 import { useGetDocuments } from "../../features/document-list/model/useGetDocuments";
 import { useNavigate, useParams } from "react-router-dom";
@@ -26,20 +26,26 @@ export const Sidebar = () => {
   return (
     <div className="h-full w-full flex flex-col justify-between items-center px-4 py-6 animate-fadeRight bg-cover bg-no-repeat bg-(--bg) shadow-(--shadow-m)">
       {id ? (
-        <div className="flex flex-col items-center gap-2 w-full">
-          <div
+        <div className="flex flex-col items-center gap-5 w-full">
+          <Button
+            size="md"
+            text="Back to Dashboard"
             onClick={() => navigate("/dashboard")}
-            className="bg-(--bg-light) rounded-2xl border p-1 flex text-(--text) shadow-(--shadow-s) cursor-pointer"
-          >
-            <ChevronLeft /> Back to Dashboard
-          </div>
-          <button
+          />
+
+          <Button
+            gap="gap-2"
+            size="sm"
+            icon={
+              <Share2
+                size={16}
+                color="black"
+              />
+            }
+            text="Share"
             onClick={() => setShareOpen(true)}
-            className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-(--bg-light) border border-white/10 text-(--text-muted) hover:text-(--text) hover:bg-black/30 shadow-(--shadow-s) transition-colors text-sm cursor-pointer"
-          >
-            <Share2 size={16} />
-            Share
-          </button>
+          />
+
           {shareOpen && (
             <ShareModal
               documentId={id}
@@ -49,10 +55,8 @@ export const Sidebar = () => {
         </div>
       ) : null}
       <Button
+        size="md"
         text="New Document"
-        buttonClass="w-54 h-10"
-        shadowClass="w-55 h-11.5 bg-black/70"
-        frontClass="w-53.5 h-10 bg-(--bg) shadow-[inset_1px_1px_3px_white] active:shadow-[inset_1px_1px_3px_black] active:translate-0.5 top-0.5 left-0.5"
         onClick={create}
       />
       <div className="flex flex-col gap-4 h-[60%]">
