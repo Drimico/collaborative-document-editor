@@ -7,6 +7,7 @@ import "react-quill-new/dist/quill.snow.css";
 import { useAuth } from "../../app/providers/AuthProvider";
 import { useAwarenessStore } from "../../shared/stores/awarenessStore";
 import { useAutosave } from "../../features/document-persistence/model/useAutosaveContent";
+import { useSeedContent } from "../../features/document-persistence/model/useSeedContent";
 
 export const QuillEditor = ({ sharedTypeName, placeholder }: { sharedTypeName: string; placeholder: string }) => {
   const { doc, provider } = useYjs();
@@ -14,6 +15,7 @@ export const QuillEditor = ({ sharedTypeName, placeholder }: { sharedTypeName: s
   const color = useAwarenessStore((state) => state.color);
   const quillRef = useRef<ReactQuill>(null);
   useAutosave(quillRef);
+  useSeedContent(quillRef, sharedTypeName);
   useEffect(() => {
     const quill = quillRef.current;
     if (!quill?.getEditor()) return;
