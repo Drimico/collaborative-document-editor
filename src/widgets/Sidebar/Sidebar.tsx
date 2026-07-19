@@ -12,7 +12,7 @@ import { ShareModal } from "./ui/ShareModal";
 export const Sidebar = () => {
   const [shareOpen, setShareOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const { documents } = useGetDocuments();
+  const { documents } = useGetDocuments({ search });
   const navigate = useNavigate();
   const { create } = useCreateDocument();
   const { remove, deletingId } = useDeleteDocument();
