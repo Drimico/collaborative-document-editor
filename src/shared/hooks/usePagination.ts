@@ -11,6 +11,9 @@ export const usePagination = () => {
   const prevPage = () => {
     setPage((prev) => Math.max(0, prev - 1));
   };
+  const reset = () => {
+    setPage(0);
+  };
   return {
     page,
     offset,
@@ -18,5 +21,6 @@ export const usePagination = () => {
     end,
     nextPage,
     prevPage,
+    reset,
   };
 };

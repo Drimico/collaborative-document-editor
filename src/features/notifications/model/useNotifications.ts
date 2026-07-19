@@ -5,6 +5,7 @@ import { supabase } from "../../../shared/lib/supabase";
 import { getNotifications } from "../../../entities/notification/api/getNotifications";
 import { markNotificationRead } from "../../../entities/notification/api/markNotificationRead";
 import { deleteNotification } from "../../../entities/notification/api/deleteNotification";
+import { acceptDocumentShare } from "../../../entities/document/api/acceptDocumentShare";
 import type { Notification } from "../../../entities/notification/model/types";
 
 export const useNotifications = () => {
@@ -61,9 +62,11 @@ export const useNotifications = () => {
 
   // ── handlers ─────────────────────────────────────────────────
 
-  // Open: delete the notification row + navigate to editor
+  // Open: accept the share (makes the doc visible in the dashboard),
+  // delete the notification row + navigate to editor
   const handleOpen = async (notificationId: string, documentId: string) => {
-    await deleteNotification(notificationId);
+    if (!user?.id) return;
+    await Promise.all([acceptDocumentShare(documentId, user.id), deleteNotification(notificationId)]);
     setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
     navigate(`/documents/${documentId}`);
   };

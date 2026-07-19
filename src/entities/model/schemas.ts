@@ -10,3 +10,17 @@ export const documentSchema = z.object({
 });
 
 export type Document = z.infer<typeof documentSchema>;
+
+export const unifiedDocumentSchema = z.object({
+  document_id: z.number(),
+  title: z.string(),
+  last_edited_at: z.string(),
+  owner_id: z.string(),
+  user_id: z.string(),
+  invited_at: z.string().nullable(),
+  relation_type: z.enum(["owned", "shared"]),
+  active_date: z.string(),
+});
+
+export type UnifiedDocument = z.infer<typeof unifiedDocumentSchema>;
+export type DocumentRelationType = UnifiedDocument["relation_type"];
